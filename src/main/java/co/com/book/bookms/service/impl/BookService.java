@@ -23,4 +23,11 @@ public class BookService implements IBookService {
     public Book findById(Long id) {
         return bookRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Book save(Book book) {
+        return bookRepository.save(book);
+    }
+
+
 }

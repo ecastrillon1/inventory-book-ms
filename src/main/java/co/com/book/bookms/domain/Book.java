@@ -10,7 +10,7 @@ public class Book {
 
     @Id
     @Column(name = "book_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_book_id_seq")
     @SequenceGenerator(name = "book_book_id_seq", sequenceName = "book_book_id_seq", allocationSize = 1)
     private Long id;
 
