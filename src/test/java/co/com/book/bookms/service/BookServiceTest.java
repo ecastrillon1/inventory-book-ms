@@ -9,6 +9,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
@@ -19,10 +20,21 @@ class BookServiceTest {
     private IBookRepository bookRepository;
 
     @Test
-    void findAll(){
+    void shouldReturnAllBooks(){
         when(bookRepository.findAll()).thenReturn(new ArrayList<Book>());
         List<Book> books = bookRepository.findAll();
         Assertions.assertEquals( 0, books.size());
+    }
+
+    @Test
+    void shouldReturnBookById(){
+        Book book = new Book();
+        book.setId(1L);
+        book.setTittle("Test");
+        when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
+        Book bookAux = bookRepository.findById(1L).orElse(new Book());
+        Assertions.assertEquals( book.getId(), bookAux.getId());
+        Assertions.assertEquals( book.getTittle(), bookAux.getTittle());
     }
 
 }

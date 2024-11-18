@@ -24,9 +24,17 @@ class BookControllerTest {
     private IBookService bookService;
 
     @Test
-    void shouldReturnHealthStatus() throws Exception {
+    void shouldReturnBooksStatus() throws Exception {
         when(bookService.findAll()).thenReturn(new ArrayList<Book>());
         mockMvc.perform(get("/api/books"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
+
+    @Test
+    void shouldReturnBookByIdStatus() throws Exception {
+        when(bookService.findById(1L)).thenReturn(new Book());
+        mockMvc.perform(get("/api/books/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
     }

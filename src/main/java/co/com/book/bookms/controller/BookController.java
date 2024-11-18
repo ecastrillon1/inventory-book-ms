@@ -4,6 +4,7 @@ import co.com.book.bookms.domain.Book;
 import co.com.book.bookms.service.IBookService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,5 +20,10 @@ public class BookController {
     @GetMapping
     List<Book> findAll(){
         return bookService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    Book findById(@PathVariable Long id){
+        return bookService.findById(id);
     }
 }
