@@ -21,7 +21,7 @@ class BookServiceTest {
 
     @Test
     void shouldReturnAllBooks(){
-        when(bookRepository.findAll()).thenReturn(new ArrayList<Book>());
+        when(bookRepository.findAll()).thenReturn(new ArrayList<>());
         List<Book> books = bookRepository.findAll();
         Assertions.assertEquals( 0, books.size());
     }
@@ -34,6 +34,15 @@ class BookServiceTest {
         when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
         Book bookAux = bookRepository.findById(1L).orElse(new Book());
         Assertions.assertEquals( book.getId(), bookAux.getId());
+        Assertions.assertEquals( book.getTittle(), bookAux.getTittle());
+    }
+
+    @Test
+    void shouldReturnBookSaved(){
+        Book book = new Book();
+        book.setTittle("Test");
+        when(bookRepository.save(book)).thenReturn(book);
+        Book bookAux = bookRepository.save(book);
         Assertions.assertEquals( book.getTittle(), bookAux.getTittle());
     }
 

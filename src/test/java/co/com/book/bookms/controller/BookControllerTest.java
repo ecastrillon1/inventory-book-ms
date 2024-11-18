@@ -38,4 +38,14 @@ class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
     }
+
+    @Test
+    void shouldReturnBookSaved() throws Exception {
+        Book book = new Book();
+        book.setTittle("Test");
+        when(bookService.save(book)).thenReturn(book);
+        mockMvc.perform(get("/api/books"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
 }

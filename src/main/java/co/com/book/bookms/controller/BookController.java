@@ -3,10 +3,7 @@ package co.com.book.bookms.controller;
 import co.com.book.bookms.domain.Book;
 import co.com.book.bookms.service.IBookService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,10 @@ public class BookController {
     @GetMapping("/{id}")
     Book findById(@PathVariable Long id){
         return bookService.findById(id);
+    }
+
+    @PostMapping
+    Book save(@RequestBody Book book){
+        return bookService.save(book);
     }
 }
