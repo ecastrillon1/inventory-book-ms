@@ -18,4 +18,9 @@ public class BookService implements IBookService {
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
+
+    @Override
+    public Book findById(Long id) {
+        return bookRepository.findById(id).orElse(null);
+    }
 }
