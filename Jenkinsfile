@@ -1,5 +1,4 @@
 node {
-    agent any
     stages {
         stage('Checkout') {
                 steps {
