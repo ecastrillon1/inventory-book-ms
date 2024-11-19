@@ -7,10 +7,10 @@ node {
             ])
     }
     stage('Build') {
-            sh './gradlew build'
+            bat './gradlew build'
     }
 
     stage('Build') {
-                sh './gradlew test'
-     }
+        bat './gradlew test'
+    }
 }
