@@ -28,4 +28,9 @@ public class BookController {
     Book save(@RequestBody Book book){
         return bookService.save(book);
     }
+
+    @DeleteMapping("/{id}")
+    void deleteById(@PathVariable Long id){
+        bookService.deleteById(id);
+    }
 }
