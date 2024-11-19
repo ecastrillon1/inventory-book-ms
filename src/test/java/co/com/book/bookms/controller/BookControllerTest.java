@@ -2,15 +2,17 @@ package co.com.book.bookms.controller;
 
 import co.com.book.bookms.domain.Book;
 import co.com.book.bookms.service.IBookService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,6 +24,9 @@ class BookControllerTest {
 
     @MockitoBean
     private IBookService bookService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     void shouldReturnBooksStatus() throws Exception {
@@ -43,9 +48,19 @@ class BookControllerTest {
     void shouldReturnBookSaved() throws Exception {
         Book book = new Book();
         book.setTittle("Test");
+        book.setAuthor("Test");
+        book.setAvailability(true);
         when(bookService.save(book)).thenReturn(book);
-        mockMvc.perform(get("/api/books"))
+        mockMvc.perform(post("/api/books")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
+    }
+
+    @Test
+    void shouldReturn200WhenDeleteBook() throws Exception {
+        mockMvc.perform(delete("/api/books/1"))
+                .andExpect(status().isOk());
     }
 }
