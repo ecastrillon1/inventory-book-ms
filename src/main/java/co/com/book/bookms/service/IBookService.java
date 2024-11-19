@@ -10,4 +10,5 @@ public interface IBookService {
     Book findById(Long id);
     Book save(Book book);
     void deleteById(Long id);
+    Book update(Book book);
 }

@@ -56,4 +56,18 @@ class BookServiceTest {
         verify(bookRepository, times(1)).deleteById(1L);
     }
 
+    @Test
+    void shouldReturnBookUpdated(){
+        Book book = new Book();
+        book.setId(1L);
+        book.setTittle("Test");
+
+        Book updatedBook = new Book();
+        updatedBook.setId(1L);
+        updatedBook.setTittle("Updated");
+
+        when(bookRepository.findById(1L)).thenReturn(Optional.of(updatedBook));
+        Book bookAux = bookService.update(book);
+        Assertions.assertEquals( book.getTittle(), bookAux.getTittle());
+    }
 }

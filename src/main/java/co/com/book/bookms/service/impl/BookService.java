@@ -34,5 +34,17 @@ public class BookService implements IBookService {
         bookRepository.deleteById(id);
     }
 
+    @Override
+    public Book update(Book book) {
+        Book updatedBook = bookRepository.findById(book.getId()).orElse(null);
+        if (updatedBook != null) {
+            updatedBook.setTittle(book.getTittle());
+            updatedBook.setAuthor(book.getAuthor());
+            updatedBook.setAvailability(book.isAvailability());
+            bookRepository.save(updatedBook);
+        }
+        return updatedBook;
+    }
+
 
 }
