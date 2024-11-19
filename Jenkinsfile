@@ -6,4 +6,11 @@ node {
                 userRemoteConfigs: [[url: 'https://github.com/ecastrillon1/inventory-book-ms.git']]
             ])
     }
+    stage('Build') {
+            sh './gradlew build'
+    }
+
+    stage('Build') {
+                sh './gradlew test'
+     }
 }
