@@ -63,4 +63,22 @@ class BookControllerTest {
         mockMvc.perform(delete("/api/books/1"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void shouldReturnBookUpdated() throws Exception {
+        Book book = new Book();
+        book.setTittle("Test");
+        book.setAuthor("Test");
+        book.setAvailability(true);
+
+        Book updatedBook = new Book();
+        updatedBook.setTittle("Updated");
+        when(bookService.save(book)).thenReturn(book);
+        when(bookService.findById(1L)).thenReturn(updatedBook);
+        mockMvc.perform(post("/api/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(book)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
 }
