@@ -1,5 +1,9 @@
 node {
     stage('Clone sources') {
-        git branch: 'develop', url: 'https://github.com/ecastrillon1/inventory-book-ms.git'
+            println("Clonando desde la rama develop")
+            checkout([$class: 'GitSCM',
+                branches: [[name: '*/develop']],
+                userRemoteConfigs: [[url: 'https://github.com/ecastrillon1/inventory-book-ms.git']]
+            ])
     }
 }
