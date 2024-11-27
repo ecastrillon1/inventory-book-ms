@@ -73,9 +73,9 @@ class BookControllerTest {
 
         Book updatedBook = new Book();
         updatedBook.setTittle("Updated");
-        when(bookService.save(book)).thenReturn(book);
+        when(bookService.update(book)).thenReturn(book);
         when(bookService.findById(1L)).thenReturn(updatedBook);
-        mockMvc.perform(post("/api/books")
+        mockMvc.perform(put("/api/books")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isOk())

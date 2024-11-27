@@ -10,7 +10,7 @@ node {
             bat './gradlew build'
     }
 
-    stage('Build') {
+    stage('Test') {
         bat './gradlew test'
     }
 }
