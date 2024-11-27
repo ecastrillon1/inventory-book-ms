@@ -70,4 +70,19 @@ class BookServiceTest {
         Book bookAux = bookService.update(book);
         Assertions.assertEquals( book.getTittle(), bookAux.getTittle());
     }
+
+    @Test
+    void shouldReturnNullWhenBookNotUpdated(){
+        Book book = new Book();
+        book.setId(1L);
+        book.setTittle("Test");
+
+        Book updatedBook = new Book();
+        updatedBook.setId(1L);
+        updatedBook.setTittle("Updated");
+
+        when(bookRepository.findById(1L)).thenReturn(Optional.empty());
+        Book bookAux = bookService.update(book);
+        Assertions.assertNull(bookAux);
+    }
 }
