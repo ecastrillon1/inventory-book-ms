@@ -33,8 +33,14 @@ node {
                 '''
     }
 
-    stage('Publish Test Results') {
-        junit '**/build/reports/jacoco/test/jacocoTestReport.xml'
+    stage('Publish JaCoCo Report') {
+        jacoco(
+            execPattern: '**/build/jacoco/test.exec', // Ruta al archivo .exec
+            classPattern: '**/classes', // Ruta a los archivos de clases
+            sourcePattern: '**/src/main/java', // Ruta al código fuente
+            inclusionPattern: '**/*.class', // Incluir todos los archivos .class
+            exclusionPattern: '**/*Test.class' // Excluir clases de pruebas si es necesario
+        )
     }
 
 }
