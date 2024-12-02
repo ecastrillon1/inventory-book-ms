@@ -34,7 +34,7 @@ node {
     }
 
     stage('Publish Test Results') {
-        junit '**/build/reports/jacoco/test/*.xml'
+        junit '**/build/reports/jacoco/test/jacocoTestReport.xml'
     }
 
 }
