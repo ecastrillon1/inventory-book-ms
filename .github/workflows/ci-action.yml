@@ -1,4 +1,4 @@
-name: Jenkins CI
+name: CI-INVENTORY-BOOK-MS
 
 on:
   push:

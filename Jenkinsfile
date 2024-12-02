@@ -1,6 +1,10 @@
 node {
+
+    environment {
+        CODECOV_TOKEN = credentials('codecov-token')
+    }
+
     stage('Clone sources') {
-            println("Clonando desde la rama develop")
             checkout([$class: 'GitSCM',
                 branches: [[name: '*/develop']],
                 userRemoteConfigs: [[url: 'https://github.com/ecastrillon1/inventory-book-ms.git']]
@@ -13,4 +17,24 @@ node {
     stage('Test') {
         bat './gradlew test'
     }
+
+    stage('Upload Coverage to Codecov') {
+        powershell '''
+                    # Forzar el uso de TLS 1.2
+                    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+                    # Descargar el script de Codecov
+                    $url = "https://codecov.io/bash"
+                    $output = Invoke-WebRequest -Uri $url -OutFile "codecov.sh"
+
+
+                    # Ejecutar el script de Codecov
+                    ./codecov.sh -t ${CODECOV_TOKEN}
+                '''
+    }
+
+    stage('Publish Test Results') {
+        junit '**/build/reports/jacoco/test/jacocoTestReport.xml'
+    }
+
 }
