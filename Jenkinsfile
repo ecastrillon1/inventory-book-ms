@@ -2,6 +2,8 @@ node {
 
     environment {
         CODECOV_TOKEN = credentials('codecov-token')
+        SENTRY_AUTH_TOKEN = credentials('sentry-auth-token')
+
     }
 
     stage('Clone sources') {

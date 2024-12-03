@@ -3,6 +3,7 @@ package co.com.book.bookms.service.impl;
 import co.com.book.bookms.domain.Book;
 import co.com.book.bookms.repository.IBookRepository;
 import co.com.book.bookms.service.IBookService;
+import io.sentry.Sentry;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +36,19 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public Book update(Book book) {
+    public Book update(Book book) throws Exception {
         Book updatedBook = bookRepository.findById(book.getId()).orElse(null);
-        if (updatedBook != null) {
-            updatedBook.setTittle(book.getTittle());
-            updatedBook.setAuthor(book.getAuthor());
-            updatedBook.setAvailability(book.isAvailability());
-            bookRepository.save(updatedBook);
+
+        if (updatedBook == null) {
+            Exception exception = new Exception("Error, no existe el book con el id: " + book.getId());
+            Sentry.captureException(exception);
+            throw exception;
         }
+
+        updatedBook.setTittle(book.getTittle());
+        updatedBook.setAuthor(book.getAuthor());
+        updatedBook.setAvailability(book.isAvailability());
+        bookRepository.save(updatedBook);
         return updatedBook;
     }
 

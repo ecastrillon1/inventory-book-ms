@@ -22,4 +22,7 @@ El microservicio fue desarrollado con las siguientes tecnologias:
 * PostgreSQL
 * Docker
 * Jenkins
+* Sentry
+* Flyway
+* Codecov
 

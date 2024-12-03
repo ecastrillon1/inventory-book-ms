@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.4.0-SNAPSHOT'
     id 'io.spring.dependency-management' version '1.1.6'
     id 'jacoco'
+    id "io.sentry.jvm.gradle" version "4.14.1"
 }
 
 group = 'co.com.book'
@@ -56,6 +57,23 @@ jacocoTestReport {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 }
 
-jacocoTestReport.dependsOn {
-    subprojects*.test
+tasks.jacocoTestReport {
+    dependsOn subprojects*.test
+    mustRunAfter sentryBundleSourcesJava
+}
+
+sentry {
+    includeSourceContext = true
+
+    org = "na-2um"
+    projectName = "inventory-book-ms"
+    authToken = System.getenv("SENTRY_AUTH_TOKEN")
+}
+
+tasks.named('sentryBundleSourcesJava') {
+    enabled = false
+}
+
+tasks.named('sentryUploadSourceBundleJava') {
+    enabled = false
 }

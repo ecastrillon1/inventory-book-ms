@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -57,7 +58,7 @@ class BookServiceTest {
     }
 
     @Test
-    void shouldReturnBookUpdated(){
+    void shouldReturnBookUpdated() throws Exception {
         Book book = new Book();
         book.setId(1L);
         book.setTittle("Test");
@@ -72,7 +73,7 @@ class BookServiceTest {
     }
 
     @Test
-    void shouldReturnNullWhenBookNotUpdated(){
+    void shouldReturnNullWhenBookNotUpdated() throws Exception {
         Book book = new Book();
         book.setId(1L);
         book.setTittle("Test");
@@ -82,7 +83,6 @@ class BookServiceTest {
         updatedBook.setTittle("Updated");
 
         when(bookRepository.findById(1L)).thenReturn(Optional.empty());
-        Book bookAux = bookService.update(book);
-        Assertions.assertNull(bookAux);
+        assertThrows(Exception.class, () -> bookService.update(book));
     }
 }
