@@ -36,7 +36,8 @@ jobs:
         run: chmod +x gradlew
       - name: Run tests
         run:  ./gradlew clean build
-        with: ${{secrets.SENTRY_AUTH_TOKEN}}
+        with:
+          SENTRY_AUTH_TOKEN: ${{secrets.SENTRY_AUTH_TOKEN}}
       - name: Coverage Report
         run:  ./gradlew jacocoTestReport
       - name: Upload coverage to Codecov
