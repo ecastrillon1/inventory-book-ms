@@ -69,3 +69,11 @@ sentry {
     projectName = "inventory-book-ms"
     authToken = System.getenv("SENTRY_AUTH_TOKEN")
 }
+
+tasks.named('sentryBundleSourcesJava') {
+    enabled = false
+}
+
+tasks.named('sentryUploadSourceBundleJava') {
+    enabled = false
+}
